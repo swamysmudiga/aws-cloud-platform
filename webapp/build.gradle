@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.swamyms'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.3.3'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.security:spring-security-crypto:6.3.3'
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+	implementation 'software.amazon.awssdk:s3:2.20.37' // check for the latest version
+	implementation 'software.amazon.awssdk:auth:2.20.37'
+	implementation 'software.amazon.awssdk:sns:2.20.0'
+	implementation 'software.amazon.awssdk:regions:2.20.0'
+
+
+
+	implementation 'io.micrometer:micrometer-registry-cloudwatch2'
+	implementation 'software.amazon.awssdk:cloudwatch:2.17.146'
+
+	//implementation 'io.micrometer:micrometer-registry-statsd'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.429' // Use the latest version
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE' // Ensure compatibility with your Spring Boot version
+	implementation 'io.micrometer:micrometer-core'
+	implementation 'io.micrometer:micrometer-registry-cloudwatch2:1.10.0' // Use the latest version
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-core'
+
+
+	// PostgreSQL Test Container (if using TestContainers)
+	testImplementation 'org.testcontainers:junit-jupiter:1.17.3'
+	testImplementation 'org.testcontainers:postgresql:1.17.3'
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
